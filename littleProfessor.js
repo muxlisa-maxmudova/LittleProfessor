@@ -13,20 +13,53 @@
 // accumulator pattern
 // if else
 //const p = document.querySelector("#level1")
-const a = Math.round(Math.random()*10)
-let b = Math.floor(Math.random()*10)
-let c = a+b
-document.querySelector('h1').innerHTML = `${a}+${b} = `
-function level1 () {
-  if (c === +document.querySelector('input').value) {
-   document.querySelector('#smth').innerHTML = '✅'
-  } else if (c !== +document.querySelector('input').value) {
-   document.querySelector('#smth').innerHTML = '❌'
-  }
-
+function getLevel (){
+    while(true){
+        let level = prompt('Level (1,2 or 3):')
+        level = parseInt(level);
+        if(level===1||level===2 || level===3){
+            return level
+        } else (alert('Invalid level. Please try again'))
+    }
 }
+//getLevel()
 
-
+function generator (level) {
+    if(level===1){
+       return Math.floor(Math.random()*10)
+    } else if(level===2){
+        return Math.floor(Math.random()*90)+10
+    } else if(level===3){
+        return Math.floor(Math.random()*900)+100
+    } else {
+        throw new Error('Invalid level. Please try again')
+    }
+}
+function main () {
+    const level = getLevel();
+    let score = 0;
+    for(let i = 1; i < 10; i++){
+        const x = generator(level)
+        const y = generator(level)
+        const correct = x+y;
+        let attempts = 0;
+        while(attempts < 3){
+            const userAnswer = prompt(`${x} + ${y} = `)
+            if(!isNaN(userAnswer) && parseInt(userAnswer) === correct){
+                score ++
+                break;
+            } else{
+                alert('EEE');
+            }
+            attempts++;
+        }
+        if(attempts === 3){
+            alert(`${x}+${y}=${correct}`);
+        }
+    }
+    alert(`Score: ${score}/10`);
+}
+main()
 
 
 
